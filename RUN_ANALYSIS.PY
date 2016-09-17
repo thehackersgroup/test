@@ -6,7 +6,7 @@ execfile('helpers.py')
 OUT_DIR = '.'
 
 DATA = OrderedDict()
-DATA['sensor-reading'] = {'detect_step_width': 10}
+DATA['sensor-reading'] = {'detect_step_width': 10, 'plot_gt': False}
 
 for DATASET in DATA:
 

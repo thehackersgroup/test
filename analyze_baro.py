@@ -59,5 +59,6 @@ df_baro['alt_steps'], df_baro['alt_steps_height'] = detect_step(df_baro['alt'], 
 df_baro['alt_steps'] = 1 * df_baro['alt_steps']
 df_baro[['alt_steps', 'alt', 'alt_steps_height']].plot(figsize=[12,12]) # alt_steps_height
 plot(df_baro.index, -5 * ones(len(df_baro.index)), 'x')
-plot(gt[['start_time']], -7 * ones(len(gt.index)), 'x')
-plot(gt[['end_time']], -7 * ones(len(gt.index)), 'o')
+if DATA[DATASET]['plot_gt']:
+    plot(gt[['start_time']], -7 * ones(len(gt.index)), 'x')
+    plot(gt[['end_time']], -7 * ones(len(gt.index)), 'o')
