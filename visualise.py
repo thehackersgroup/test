@@ -28,7 +28,7 @@ for i in range(0, len(t)):
 ts = pd.Series(abs_val, index=t)
 
 #plot the time series
-plt.figure(1)
+plt.figure(figsize=[20,10])
 plt.subplot(2,1,1)
 ts.plot(style='k--')
 
@@ -45,7 +45,7 @@ rollingVar_sg = savgol_filter(itp(rollingVar.index), DATA[DATASET]['accel_smooth
 is_above = rollingVar_sg > percentile_result
 df_accel['is_activity'] = is_above
 
-plt.figure(2)
+plt.figure(figsize=[20,10])
 rollingVar.plot(style='b')
 plt.plot(rollingVar.index, is_above, color = 'y')
 plt.plot(rollingVar.index, rollingVar_sg, color = 'k')
