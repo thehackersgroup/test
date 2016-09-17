@@ -1,14 +1,18 @@
 #!/usr/bin/env python
 
-FILES_PREFIXES = ['sensor-reading']
+from collections import OrderedDict
+
 OUT_DIR = '.'
 
-for FILES_PREFIX in FILES_PREFIXES:
+DATA = OrderedDict()
+DATA['sensor-reading'] = {'detect_step_width': 10}
 
-    print '### %s ###' % FILES_PREFIX
+for DATASET in DATA:
+
+    print '### %s ###' % DATASET
     
     execfile('convert_to_csv.py')
-    convert(FILES_PREFIX + '.json', FILES_PREFIX)
+    convert(DATASET + '.json', DATASET)
 
     execfile('analyze_load.py')
     
