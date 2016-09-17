@@ -12,5 +12,7 @@ for FILES_PREFIX in FILES_PREFIXES:
 
     execfile('analyze_load.py')
     
+    execfile('analyze_baro.py')
+    
     execfile('foo.py')
     
