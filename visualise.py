@@ -26,17 +26,27 @@ for i in range(0, len(t)):
 
 # some sample data
 ts = pd.Series(abs_val, index=t)
+ts = ts.iloc[400000:]
 
 #plot the time series
-plt.subplot(3,1,1)
+plt.figure(1)
+plt.subplot(2,1,1)
 ts.plot(style='k--')
 
 # calculate a 60 day rolling mean and plot
-plt.subplot(3,1,2)
+plt.subplot(2,1,2)
 ts.rolling(30).mean().plot(style='k')
 
 # add the 20 day rolling variance:
-plt.subplot(3,1,3)
-ts.rolling(30).std().plot(style='b')
+rollingVar = ts.rolling(30).std()
+percentiles = [10, 25, 50, 75, 90]
+percentile_result = np.nanpercentile(rollingVar, percentiles)
+print percentiles
+print percentile_result
+
+plt.figure(2)
+rollingVar.plot(style='b')
+for i in range(0,len(percentiles)):
+    plt.axhline(y=percentile_result[i], color = 'r')
 
 plt.show()
