@@ -40,9 +40,8 @@ ts.rolling(DATA[DATASET]['rolling_std_width']).mean().plot(style='k')
 rollingVar = ts.rolling(DATA[DATASET]['rolling_std_width']).std().fillna(method='backfill')
 percentile_result = np.nanpercentile(rollingVar, DATA[DATASET]['percentile'])
 
-window_size, poly_order = 25, 3
 itp = interp1d(rollingVar.index, rollingVar.values, kind='linear')
-rollingVar_sg = savgol_filter(itp(rollingVar.index), window_size, poly_order)
+rollingVar_sg = savgol_filter(itp(rollingVar.index), DATA[DATASET]['accel_smoothing_window_size'], DATA[DATASET]['accel_smoothing_poly_order'])
 is_above = rollingVar_sg > percentile_result
 df_accel['is_activity'] = is_above
 

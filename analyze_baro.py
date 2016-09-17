@@ -57,5 +57,4 @@ df_baro['alt_fil'] = savgol_filter(itp(t), window_size, poly_order)
 
 df_baro['alt_steps'], df_baro['alt_steps_height'] = detect_step(df_baro['alt'], width=DATA[DATASET]['detect_step_width'])
 df_baro['alt_steps'] = 1 * df_baro['alt_steps']
-df_baro[['alt_steps', 'alt', 'alt_steps_height']].plot(figsize=[12,12]) # alt_steps_height
 

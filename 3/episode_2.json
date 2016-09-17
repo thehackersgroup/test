@@ -1,0 +1,14 @@
+[
+  {
+    "start_time": ,
+    "end_time": ,
+    "label": "stairway_workout",
+    "description": "walking up the stairs, 2-stepping up the stairwell, walking towards elevators and waiting, riding the elevator down, walking back to seat"
+  },
+  {
+    "start_time": ,
+    "end_time": ,
+    "label": "escalator_fun",
+    "description": "riding up escaltor, walking, riding down escalator"
+  }
+]

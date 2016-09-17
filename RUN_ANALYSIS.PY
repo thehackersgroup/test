@@ -21,3 +21,5 @@ for DATASET in DATA:
     
     execfile('foo.py')
     
+    execfile('plot.py')
+    
