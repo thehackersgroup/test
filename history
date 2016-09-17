@@ -1,0 +1,26 @@
+
+a=df_baro.to_dict(orient='records')
+b=df_accel.to_dict(orient='records')
+
+history={}
+
+for rec in a: 
+	if rec['alt_steps']==1.0:
+		history[rec['date']]   = {'height': abs(rec['alt_steps_height']),'dir': 'up'}
+	elif rec['alt_steps']==-1.0:
+		history[rec['date']] =  {'height': abs(rec['alt_steps_height']) ,'dir': 'down'}
+
+state=None
+for rec in b: 
+	if state!=rec['is_activity']:
+		state=rec['is_activity']
+		if not rec['date'] in history:
+			history[rec['date']]={'active':rec['is_activity']}
+
+for p in sorted(history):
+	if len(history[p])==1 and history[p]['active']==True:
+		print 'Ms X is started moving'
+	elif len(history[p])==1 and history[p]['active']==False:
+		print 'Ms X sits'
+	else:
+		print 'Ms X using the elevator to go ', history[p]['dir']
