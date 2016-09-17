@@ -10,6 +10,7 @@ def regularise_time(ts, xs):
 
     return(x1, t1)
 
+activity_t = df_accel.index
 t0 = df_accel.index - df_accel.index[0]
 t0 = [_t.seconds+float(_t.microseconds)/1000000 for _t in t0]
 x0 = df_accel['x']
