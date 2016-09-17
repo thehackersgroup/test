@@ -10,6 +10,8 @@ from scipy.interpolate import interp1d
 #
 #    return(x1, t1)
 
+
+
 t = df_accel.index - df_accel.index[0]
 t = [_t.seconds+float(_t.microseconds)/1000000 for _t in t]
 x = df_accel['x']
@@ -21,8 +23,10 @@ z = df_accel['z']
 #(z, t) = regularise_time(t0, z0)
 
 abs_val = []
-for i in range(0, len(t)):
+for i in range(len(df_accel.index)):
     abs_val.append(x[i]*x[i] + y[i]*y[i] + z[i]*z[i])
+    
+df_accel['abs_val'] = abs_val
 
 # some sample data
 ts = pd.Series(abs_val, index=t)
@@ -45,10 +49,11 @@ rollingVar_sg = savgol_filter(itp(rollingVar.index), DATA[DATASET]['accel_smooth
 is_above = rollingVar_sg > percentile_result
 df_accel['is_activity'] = is_above
 
-plt.figure(figsize=[20,10])
+plt.figure(figsize=[23.5,10])
 rollingVar.plot(style='b')
 plt.plot(rollingVar.index, is_above, color = 'y')
 plt.plot(rollingVar.index, rollingVar_sg, color = 'k')
 plt.axhline(y=percentile_result, color = 'r')
 
-plt.show()
+df_accel[['is_activity']].plot(figsize=[24,10], grid=True)
+ylim([0,1.1])

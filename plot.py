@@ -12,4 +12,6 @@ if DATA[DATASET]['plot_gt']:
 legend()
 
 fig.add_subplot(2,1,2)
-df_accel.plot(ax=gca())
+df_accel[['x', 'y', 'z', 'is_activity']].plot(ax=gca())
+
+plt.show()
