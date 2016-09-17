@@ -7,6 +7,7 @@ from scipy.signal import savgol_filter
 from scipy.interpolate import interp1d
 from scipy.signal import find_peaks_cwt
 import csv
+import pandas
 
 from sklearn import datasets, svm, metrics
 
@@ -37,14 +38,13 @@ x = []
 y = []
 z = []
 
-with open('../test-master/sensor-reading-acceleration.csv', 'r') as my_csvfile:
-    spamreader = csv.reader(my_csvfile, delimiter=',')
-    for row in spamreader:
-        date_object = datetime.strptime(row[0], '%Y-%m-%dT%H:%M:%S.%f+02:00')
-        t.append((date_object-datetime(1970,1,1)).total_seconds())
-        x.append(float(row[1]))
-        y.append(float(row[2]))
-        z.append(float(row[3]))
+
+t = df_accel.index - df_accel.index[0]
+t = [_t.seconds for _t in t]
+x = df_accel['x']
+y = df_accel['y']
+z = df_accel['z']
+
 
 abs_val = []
 for i in range(0, len(t)):
