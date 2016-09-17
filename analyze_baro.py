@@ -3,7 +3,7 @@
 from scipy.interpolate import interp1d
 from pylab import *
 
-def detect_step(xs, threshold=1.0, width=10, smoothing = 0.7):
+def detect_step(xs, threshold=5.0, width=10, smoothing = 0.7):
     from scipy.signal import find_peaks_cwt
     xs_mean = mean(xs)
     detected_steps = zeros(len(xs))
@@ -52,5 +52,6 @@ def detect_step(xs, threshold=1.0, width=10, smoothing = 0.7):
 
 
 df_baro['alt_steps'], df_baro['alt_steps_height'] = detect_step(df_baro['alt'])
-df_baro[['alt_steps', 'alt', 'alt_steps_height']].plot(figsize=[20,5])
+df_baro[['alt_steps', 'alt']].plot(figsize=[20,10]) # alt_steps_height
+plot(df_baro.index, -5 * ones(len(df_baro.index)), 'x')
 legend()
