@@ -46,33 +46,39 @@ indexesAll = indexesAbsUp
 indexesAll.extend(indexesAbsDown)
 indexesAll.sort()
 
-downs = [21 ,23, 27, 30, 35, 36]
-ups = [20, 24, 26, 31, 34, 37]
+up_times = [107.0, 129.5, 144.0, 166.0, 182.0, 204.0]
+down_times = [110.0, 126.0, 147.0, 163.0, 185.0, 201.0]
 
 plt.figure(1)
 plt.plot(t, abs_val, 'b-', t, abs_val_sg, 'g-')
 plt.ylabel('abs')
-for pos_index in ups:
-    plt.axvline(x = t[indexesAll[pos_index]], color = 'k')
-for pos_index in downs:
-    plt.axvline(x = t[indexesAll[pos_index]], color = 'r')
+for this_time in up_times:
+    plt.axvline(x = this_time, color = 'k')
+for this_time in down_times:
+    plt.axvline(x = this_time, color = 'r')
 
 width = 20 # Number of points, ~1s
-ups_data = np.zeros((len(ups), width*2+1))
-ups_data_t = np.zeros((len(ups), width*2+1))
-for i in range(0,len(ups)):
-    peakIndex = indexesAll[ups[i]]
-    ups_data[i,:] = abs_val[(peakIndex-width):(peakIndex+width+1)]
-    ups_data_t[i,:] = np.subtract(t[(peakIndex-width):(peakIndex+width+1)],t[(peakIndex-width)])
 
-downs_data = np.zeros((len(ups), width*2+1))
-downs_data_t = np.zeros((len(ups), width*2+1))
-for i in range(0, len(downs)):
-    peakIndex = indexesAll[downs[i]]
+ups_data = np.zeros((len(up_times), width*2+1))
+ups_data_t = np.zeros((len(up_times), width*2+1))
+i = 0
+for this_time in up_times:
+    peakIndex = (np.abs(np.subtract(t, this_time))).argmin()
+    ups_data[i, :] = abs_val[(peakIndex - width):(peakIndex + width + 1)]
+    ups_data_t[i, :] = np.subtract(t[(peakIndex - width):(peakIndex + width + 1)], t[(peakIndex - width)])
+    i += 1
+
+downs_data = np.zeros((len(down_times), width*2+1))
+downs_data_t = np.zeros((len(down_times), width*2+1))
+i = 0
+for this_time in down_times:
+    peakIndex = (np.abs(np.subtract(t, this_time))).argmin()
+    print this_time, peakIndex
     downs_data[i, :] = abs_val[(peakIndex - width):(peakIndex + width + 1)]
     downs_data_t[i, :] = np.subtract(t[(peakIndex - width):(peakIndex + width + 1)], t[(peakIndex - width)])
+    i += 1
 
-rand_times = np.subtract([95.0, 100.0, 110.0, 150.0, 210.0, 240.0, 90.0, 97.0, 105.0, 250.0], -t[0])
+rand_times = [95.0, 100.0, 110.0, 150.0, 210.0, 240.0, 90.0, 97.0, 105.0, 250.0]
 rand_data = np.zeros((len(rand_times), width*2+1))
 rand_data_t = np.zeros((len(rand_times), width*2+1))
 
@@ -83,8 +89,8 @@ for this_time in rand_times:
     rand_data_t[i, :] = np.subtract(t[(peakIndex - width):(peakIndex + width + 1)], t[(peakIndex - width)])
     i += 1
 
-ups_labels = np.ones((len(ups),1))
-downs_labels = np.multiply(np.ones((len(downs),1)), 2)
+ups_labels = np.ones((len(up_times),1))
+downs_labels = np.multiply(np.ones((len(down_times),1)), 2)
 rand_labels = np.zeros((len(rand_times), 1))
 
 plt.figure(2)
