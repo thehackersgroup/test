@@ -2,7 +2,7 @@ import pandas as pd
 import glob, os
 
 _dfs=[]
-for file in glob.glob("%s/*.Barometer" % CHALLENGE_NUMBER):
+for file in glob.glob("%s/*.Barometer" % DATASET):
     print file
     _dfs.append(pd.read_json(file))
 
@@ -23,7 +23,7 @@ print 'df_baro: to:', df_baro.index[-1]
 
 
 _dfs=[]
-for file in glob.glob("%s/*.Accelerometer" % CHALLENGE_NUMBER):
+for file in glob.glob("%s/*.Accelerometer" % DATASET):
     print file
     _dfs.append(pd.read_json(file))
 
@@ -41,7 +41,7 @@ print 'after filtering'
 print 'df_accel: from:', df_accel.index[0]
 print 'df_accel: to:', df_accel.index[-1]
 
-gt = pd.read_json(glob.glob("%s/*.json" % CHALLENGE_NUMBER)[0])
+gt = pd.read_json(glob.glob("%s/*.json" % DATASET)[0])
 
 
 
@@ -49,7 +49,7 @@ gt = pd.read_json(glob.glob("%s/*.json" % CHALLENGE_NUMBER)[0])
 
 #df={}
 #i=0
-#for file in glob.glob("%s/*.Accelerometer" % CHALLENGE_NUMBER):
+#for file in glob.glob("%s/*.Accelerometer" % DATASET):
 	#print file
 	#df[i] = pd.read_json(file)
 	#i=i+1

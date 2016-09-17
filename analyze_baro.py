@@ -37,7 +37,6 @@ def detect_step(xs, threshold=5.0, width=10, smoothing = 0.7):
             if current_max > 0:
                 detected_steps_binary[current_max_index] = 1
                 detected_steps_height[current_max_index] = mean([xs[j] for j in range(current_max_index + width/2, current_max_index+width)]) - mean([xs[j] for j in range(current_max_index - width, current_max_index-width/2)])
-                print detected_steps_height[current_max_index]
             elif current_max < 0:
                 detected_steps_binary[current_max_index] = -1
                 detected_steps_height[current_max_index] = mean([xs[j] for j in range(current_max_index + width/2, current_max_index+width)]) - mean([xs[j] for j in range(current_max_index - width, current_max_index-width/2)])

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from collections import OrderedDict
 execfile('helpers.py')
 
 CHALLENGE_NUMBERS = [1]

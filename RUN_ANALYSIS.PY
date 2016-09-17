@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from collections import OrderedDict
+execfile('helpers.py')
 
 OUT_DIR = '.'
 
