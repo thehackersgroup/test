@@ -11,21 +11,7 @@ import pandas
 
 from sklearn import datasets, svm, metrics
 
-def load_test_data(json_data):
-    data = json.loads(json_data)
-
-    xs = []
-    ys = []
-    zs = []
-    ts = []
-
-    for n in data:
-        xs.append(n['x'])
-        ys.append(n['y'])
-        zs.append(n['z'])
-        date_object = datetime.strptime(n['date'], '%Y-%m-%dT%H:%M:%S.%f+02:00')
-        ts.append((date_object-datetime(1970,1,1)).total_seconds())
-
+def regularise_time(ts, xs, ys, zs):
     t1 = np.arange(ts[0], ts[len(ts) - 1], 0.1)
     x1 = np.interp(t1, ts, xs)
     y1 = np.interp(t1, ts, ys)
@@ -33,18 +19,13 @@ def load_test_data(json_data):
 
     return(t1, x1, y1, z1)
 
-t = []
-x = []
-y = []
-z = []
+t0 = df_accel.index - df_accel.index[0]
+t0 = [_t.seconds+float(_t.microseconds)/1000000 for _t in t0]
+x0 = df_accel['x']
+y0 = df_accel['y']
+z0 = df_accel['z']
 
-
-t = df_accel.index - df_accel.index[0]
-t = [_t.seconds for _t in t]
-x = df_accel['x']
-y = df_accel['y']
-z = df_accel['z']
-
+(t, x, y, z) = regularise_time(t0, x0, y0, z0)
 
 abs_val = []
 for i in range(0, len(t)):
@@ -52,15 +33,6 @@ for i in range(0, len(t)):
 
 # Smoothing data
 window_size, poly_order = 25, 3
-
-#itp = interp1d(t,x, kind='linear')
-#x_sg = savgol_filter(itp(t), window_size, poly_order)
-
-#itp = interp1d(t,y, kind='linear')
-#y_sg = savgol_filter(itp(t), window_size, poly_order)
-
-#itp = interp1d(t,z, kind='linear')
-#z_sg = savgol_filter(itp(t), window_size, poly_order)
 
 itp = interp1d(t,abs_val, kind='linear')
 abs_val_sg = savgol_filter(itp(t), window_size, poly_order)
@@ -136,17 +108,17 @@ data = data[shuffled_indices,:]
 labels = labels[shuffled_indices].astype(int)
 
 # Create a classifier: a support vector classifier
-classifier = svm.SVC(gamma=0.001)
+#classifier = svm.SVC(gamma=0.001)
 
 # We learn the digits on the first half of the digits
-classifier.fit(data[:n_samples / 2], labels[:n_samples / 2])
+#classifier.fit(data[:n_samples / 2], labels[:n_samples / 2])
 
 # Now predict the value of the digit on the second half:
-expected = labels[n_samples / 2:]
-predicted = classifier.predict(data[n_samples / 2:])
+#expected = labels[n_samples / 2:]
+#predicted = classifier.predict(data[n_samples / 2:])
 
-print("Classification report for classifier %s:\n%s\n"
-      % (classifier, metrics.classification_report(expected, predicted)))
-print("Confusion matrix:\n%s" % metrics.confusion_matrix(expected, predicted))
+#print("Classification report for classifier %s:\n%s\n"
+#      % (classifier, metrics.classification_report(expected, predicted)))
+#print("Confusion matrix:\n%s" % metrics.confusion_matrix(expected, predicted))
 
 plt.show()
