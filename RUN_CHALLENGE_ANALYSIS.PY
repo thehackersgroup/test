@@ -12,7 +12,7 @@ DATA[2] = {'detect_step_width': 20, 'plot_gt': False, 'start': timestampToDateTi
 
 OUT_DIR = '.'
 
-for DATASET in DATA.keys()[0]:
+for DATASET in DATA.keys()[1:]:
 
     print '### %s ###' % DATASET
     
