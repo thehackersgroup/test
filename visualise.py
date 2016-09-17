@@ -52,4 +52,4 @@ plt.plot(rollingVar.index, is_above, color = 'y')
 plt.plot(rollingVar.index, rollingVar_sg, color = 'k')
 plt.axhline(y=percentile_result, color = 'r')
 
-#plt.show()
+plt.show()
